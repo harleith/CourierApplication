@@ -57,6 +57,7 @@ public class DataPengirimanPaket {
      */
     public void setNomorPaket(String nomorPaket) {
         this.nomorPaket = nomorPaket;
+        
     }
 
     /**
@@ -227,6 +228,9 @@ public class DataPengirimanPaket {
         this.JenisLayananHds = JenisLayananHds;
     }
 
-    
+    @Override
+    public String toString() {
+        return this.kota;
+    }
     
 }

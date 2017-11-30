@@ -316,7 +316,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jTextField10" max="32767" attributes="0"/>
-                                  <Component id="kotaTujuan" max="32767" attributes="0"/>
+                                  <Component id="combo" max="32767" attributes="0"/>
                                   <Component id="jTextField11" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jComboBox2" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jTextField16" alignment="0" max="32767" attributes="0"/>
@@ -360,7 +360,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="kotaTujuan" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="combo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -443,18 +443,18 @@
                 <Property name="text" type="java.lang.String" value="Berat Barang:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="kotaTujuan">
+            <Component class="javax.swing.JComboBox" name="combo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kotaTujuanActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboActionPerformed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;&gt;()"/>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;&gt;(kotaTujuan.toArray())"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField11">
