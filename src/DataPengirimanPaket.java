@@ -1,31 +1,48 @@
 
 import java.util.Date;
 
-public class DataPengirimanPaket {
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
+/**
+ *
+ * @author user
+ */
+public class DataPengirimanPaket {
     private String nomorPaket;
     private String kota;
     private String jenisBarang;
     private Date tanggalKirim;
     private String dimensi;
-    private String jenisLayanan;
     private double asuransi;
     private double hargaBarang;
     private double pembayaran;
+    private String jenisLayananRegular;
+    private String jenisLayananKilat;
+    private String jenisLayananSds;
+    private String jenisLayananOns;
+    private String JenisLayananHds;
 
     public DataPengirimanPaket() {
     }
 
-    public DataPengirimanPaket(String nomorPaket, String kota, String jenisBarang, Date tanggalKirim, String dimensi, String jenisLayanan, double asuransi, double hargaBarang, double pembayaran) {
+    public DataPengirimanPaket(String nomorPaket, String kota, String jenisBarang, Date tanggalKirim, String dimensi, double asuransi, double hargaBarang, double pembayaran, String jenisLayananRegular, String jenisLayananKilat, String jenisLayananSds, String jenisLayananOns, String JenisLayananHds) {
         this.nomorPaket = nomorPaket;
         this.kota = kota;
         this.jenisBarang = jenisBarang;
         this.tanggalKirim = tanggalKirim;
         this.dimensi = dimensi;
-        this.jenisLayanan = jenisLayanan;
         this.asuransi = asuransi;
         this.hargaBarang = hargaBarang;
         this.pembayaran = pembayaran;
+        this.jenisLayananRegular = jenisLayananRegular;
+        this.jenisLayananKilat = jenisLayananKilat;
+        this.jenisLayananSds = jenisLayananSds;
+        this.jenisLayananOns = jenisLayananOns;
+        this.JenisLayananHds = JenisLayananHds;
     }
 
     /**
@@ -99,20 +116,6 @@ public class DataPengirimanPaket {
     }
 
     /**
-     * @return the jenisLayanan
-     */
-    public String getJenisLayanan() {
-        return jenisLayanan;
-    }
-
-    /**
-     * @param jenisLayanan the jenisLayanan to set
-     */
-    public void setJenisLayanan(String jenisLayanan) {
-        this.jenisLayanan = jenisLayanan;
-    }
-
-    /**
      * @return the asuransi
      */
     public double getAsuransi() {
@@ -153,5 +156,77 @@ public class DataPengirimanPaket {
     public void setPembayaran(double pembayaran) {
         this.pembayaran = pembayaran;
     }
+
+    /**
+     * @return the jenisLayananRegular
+     */
+    public String getJenisLayananRegular() {
+        return jenisLayananRegular;
+    }
+
+    /**
+     * @param jenisLayananRegular the jenisLayananRegular to set
+     */
+    public void setJenisLayananRegular(String jenisLayananRegular) {
+        this.jenisLayananRegular = jenisLayananRegular;
+    }
+
+    /**
+     * @return the jenisLayananKilat
+     */
+    public String getJenisLayananKilat() {
+        return jenisLayananKilat;
+    }
+
+    /**
+     * @param jenisLayananKilat the jenisLayananKilat to set
+     */
+    public void setJenisLayananKilat(String jenisLayananKilat) {
+        this.jenisLayananKilat = jenisLayananKilat;
+    }
+
+    /**
+     * @return the jenisLayananSds
+     */
+    public String getJenisLayananSds() {
+        return jenisLayananSds;
+    }
+
+    /**
+     * @param jenisLayananSds the jenisLayananSds to set
+     */
+    public void setJenisLayananSds(String jenisLayananSds) {
+        this.jenisLayananSds = jenisLayananSds;
+    }
+
+    /**
+     * @return the jenisLayananOns
+     */
+    public String getJenisLayananOns() {
+        return jenisLayananOns;
+    }
+
+    /**
+     * @param jenisLayananOns the jenisLayananOns to set
+     */
+    public void setJenisLayananOns(String jenisLayananOns) {
+        this.jenisLayananOns = jenisLayananOns;
+    }
+
+    /**
+     * @return the JenisLayananHds
+     */
+    public String getJenisLayananHds() {
+        return JenisLayananHds;
+    }
+
+    /**
+     * @param JenisLayananHds the JenisLayananHds to set
+     */
+    public void setJenisLayananHds(String JenisLayananHds) {
+        this.JenisLayananHds = JenisLayananHds;
+    }
+
+    
     
 }
