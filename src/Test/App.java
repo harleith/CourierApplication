@@ -1,32 +1,46 @@
+package Test;
 
-import java.util.List;
+import DAO.CostDAO;
+import entitas.DataPengiriman;
+import entitas.Dimensi;
+import entitas.Laporan;
+import entitas.Penerima;
+import entitas.Pengirim;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
 public class App extends javax.swing.JFrame {
     
-    List<DataPengirimanPaket> combo1;
-    DataPengirimanPaket[] kota;
+    private Pengirim pengirim;
+    private Penerima penerima;
+    private CostDAO costDAO;
+    private DataPengiriman dataPengiriman;
+    private Dimensi dimensi;
+    private Laporan report;
     
     public App() {
-        
         initComponents();
-        initKotaDAO();
-        getKota();
     }
-    public DataPengirimanPaket[] getKota() {
-        int size = combo1.size();
-        kota = new DataPengirimanPaket[size];
-        
-        for (int i = 0; i < size; i++) {
-            DataPengirimanPaket mc = combo1.get(i);
-        }
-        return kota;
+    
+     public void setPackagePriceVisible(Boolean vis) {
+        hargaAsuransiField.setVisible(vis);
+        AsuransiLabel.setVisible(vis);
     }
-    public void initKotaDAO(){
-        try{
-            combo1 = KotaDAO.getKota();
-        } catch (Exception e) {
-}
+    
+    public String getDateNow() {
+        String date = "";
+        Date datenow = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM, dd yyyy");
+        date += sdf.format(datenow);
+        return date;
     }
+
+    public String chageFormatMoney(Double m) {
+        String format = String.format("%,.2f", m);
+        return format;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -66,21 +80,29 @@ public class App extends javax.swing.JFrame {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        Length = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        Lebar = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        Tinggi = new javax.swing.JTextField();
+        AsuransiLabel = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jTextField16 = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel25 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        KotaTujuanCombo = new javax.swing.JComboBox<>();
+        AsuransiButtonYa = new javax.swing.JRadioButton();
+        AsuransiButtonTidak = new javax.swing.JRadioButton();
+        jLabel22 = new javax.swing.JLabel();
+        hargaAsuransiField = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TotalTextField = new javax.swing.JTextArea();
+        ButtonSubmit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,7 +181,7 @@ public class App extends javax.swing.JFrame {
                             .addComponent(jTextField6))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addGap(183, 183, 183))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -240,13 +262,29 @@ public class App extends javax.swing.JFrame {
 
         jLabel19.setText("P");
 
+        Length.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LengthActionPerformed(evt);
+            }
+        });
+
         jLabel20.setText("L");
+
+        Lebar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LebarActionPerformed(evt);
+            }
+        });
 
         jLabel21.setText("T");
 
-        jLabel22.setText("Asuransi:");
+        Tinggi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TinggiActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        AsuransiLabel.setText("Asuransi:");
 
         jLabel23.setText("Harga Barang:");
 
@@ -260,7 +298,28 @@ public class App extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        KotaTujuanCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        KotaTujuanCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KotaTujuanComboActionPerformed(evt);
+            }
+        });
+
+        AsuransiButtonYa.setText("Ya");
+        AsuransiButtonYa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AsuransiButtonYaActionPerformed(evt);
+            }
+        });
+
+        AsuransiButtonTidak.setText("Tidak");
+        AsuransiButtonTidak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AsuransiButtonTidakActionPerformed(evt);
+            }
+        });
+
+        jLabel22.setText("Harga:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -280,37 +339,47 @@ public class App extends javax.swing.JFrame {
                             .addComponent(jLabel16)
                             .addComponent(jLabel17)
                             .addComponent(jLabel18)
-                            .addComponent(jLabel22)
+                            .addComponent(AsuransiLabel)
                             .addComponent(jLabel23)
                             .addComponent(jLabel24))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField10)
                             .addComponent(jTextField11)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField16, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                            .addComponent(jTextField16)
                             .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextField12)
+                            .addComponent(KotaTujuanCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel19)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel19)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Length, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel20)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Lebar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel21)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Tinggi, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(AsuransiButtonYa)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(AsuransiButtonTidak)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel22)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel20)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel25)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(188, 188, 188))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel25)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(hargaAsuransiField))))))
+                .addGap(237, 237, 237))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,7 +393,7 @@ public class App extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(KotaTujuanCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
@@ -341,17 +410,20 @@ public class App extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(jLabel19)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Length, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Lebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Tinggi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel25)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AsuransiLabel)
+                    .addComponent(AsuransiButtonYa)
+                    .addComponent(AsuransiButtonTidak)
                     .addComponent(jLabel22)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(hargaAsuransiField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -365,7 +437,47 @@ public class App extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab2", jPanel2);
 
-        jButton1.setText("Submit");
+        jLabel26.setText("Jenis Paket:");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        TotalTextField.setColumns(20);
+        TotalTextField.setRows(5);
+        jScrollPane1.setViewportView(TotalTextField);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(jLabel26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(279, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(115, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("tab3", jPanel3);
+
+        ButtonSubmit.setText("Submit");
+        ButtonSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonSubmitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -377,7 +489,7 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(303, 303, 303)
-                .addComponent(jButton1)
+                .addComponent(ButtonSubmit)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -386,12 +498,72 @@ public class App extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(ButtonSubmit)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void KotaTujuanComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KotaTujuanComboActionPerformed
+        // TODO add your handling code here:
+            dataPengiriman.setDestinasi(KotaTujuanCombo.getSelectedItem().toString());
+    }//GEN-LAST:event_KotaTujuanComboActionPerformed
+
+    private void AsuransiButtonYaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AsuransiButtonYaActionPerformed
+        // TODO add your handling code here:
+        
+            if (AsuransiButtonYa.isSelected()) {
+            setPackagePriceVisible(true);
+            dataPengiriman.setAsuransi(true);
+
+            }
+    }//GEN-LAST:event_AsuransiButtonYaActionPerformed
+
+    private void AsuransiButtonTidakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AsuransiButtonTidakActionPerformed
+        // TODO add your handling code here:
+        
+        if (AsuransiButtonTidak.isSelected()) {
+            setPackagePriceVisible(false);
+            dataPengiriman.setAsuransi(false);
+        }
+            
+    }//GEN-LAST:event_AsuransiButtonTidakActionPerformed
+
+    private void ButtonSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSubmitActionPerformed
+        // TODO add your handling code here:
+        
+            if (AsuransiButtonTidak.isSelected()) {
+                dataPengiriman.setHargaPengiriman(0.0);
+            } else {
+                dataPengiriman.setHargaPengiriman(Double.parseDouble(hargaAsuransiField.getText()));
+            }
+            Double totalCost = costDAO.calculateAsuransi(dataPengiriman);
+            System.out.println("Total Cost: " + totalCost);
+            TotalTextField.setText("" + totalCost);
+        
+    }//GEN-LAST:event_ButtonSubmitActionPerformed
+
+    private void LengthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LengthActionPerformed
+        // TODO add your handling code here:
+            Double length = Double.parseDouble(Length.getText());
+            dimensi.setLenght(length);
+            Length.requestFocus();
+    }//GEN-LAST:event_LengthActionPerformed
+
+    private void LebarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LebarActionPerformed
+        // TODO add your handling code here:
+            Double weight = Double.parseDouble(Lebar.getText());
+            dimensi.setWeight(weight);
+            Lebar.requestFocus();
+    }//GEN-LAST:event_LebarActionPerformed
+
+    private void TinggiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TinggiActionPerformed
+        // TODO add your handling code here:
+            Double height = Double.parseDouble(Tinggi.getText());
+            dimensi.setWeight(height);
+            Lebar.requestFocus();
+    }//GEN-LAST:event_TinggiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -429,11 +601,19 @@ public class App extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JRadioButton AsuransiButtonTidak;
+    private javax.swing.JRadioButton AsuransiButtonYa;
+    private javax.swing.JLabel AsuransiLabel;
+    private javax.swing.JButton ButtonSubmit;
+    private javax.swing.JComboBox<Object> KotaTujuanCombo;
+    private javax.swing.JTextField Lebar;
+    private javax.swing.JTextField Length;
+    private javax.swing.JTextField Tinggi;
+    private javax.swing.JTextArea TotalTextField;
+    private javax.swing.JTextField hargaAsuransiField;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -453,6 +633,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -462,14 +643,13 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
